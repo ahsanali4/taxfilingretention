@@ -1,0 +1,24 @@
+services:
+  taxfilingretention:
+    container_name: taxfilingretention
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9080:9080"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .env
+    restart: always
+    environment:
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      - PORT=9080
+      - local_path=${local_path?Variable not set}
+      - model_filename=${model_filename?Variable not set}
+      - preprocessor_filename=${preprocessor_filename?Variable not set}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
