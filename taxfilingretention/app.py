@@ -17,6 +17,7 @@ from taxfilingretention.utils.logger import LogManager
 
 settings = Settings()
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load preprocessor and classifier models at startup
@@ -36,10 +37,8 @@ app = FastAPI(
     title="Tax Filing Prediction API",
     description="Predicts whether a user will complete their tax filing.",
     version="1.0",
-    lifespan=lifespan
+    lifespan=lifespan,
 )
-
-
 
 
 logger = LogManager(__name__).get_logger()
@@ -54,10 +53,12 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
+
 @app.get("/health", tags=["Health Check"])
 async def health_check():
     # return application version and health information
     return {"status": "ok"}
+
 
 @app.post("/predict")
 def predict(data: List[UserData]):

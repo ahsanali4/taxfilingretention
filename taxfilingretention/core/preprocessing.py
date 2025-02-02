@@ -83,7 +83,7 @@ class Preprocessor:
 
         return X_train, X_test, y_train, y_test, self.preprocessor
 
-    def _save_dataset(self, X, y, columns, target: str, output_dir:str, data_type: str):
+    def _save_dataset(self, X, y, columns, target: str, output_dir: str, data_type: str):
 
         X_df = pd.DataFrame(X, columns=columns)
         X_df.to_csv(f"{output_dir}/{data_type}_features.csv", index=False)
